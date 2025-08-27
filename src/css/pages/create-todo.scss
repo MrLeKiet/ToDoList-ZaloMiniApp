@@ -1,0 +1,91 @@
+/* Create Todo page styles */
+.create-todo-page {
+    .form-section {
+        margin-bottom: 2rem;
+    }
+
+    .color-picker {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+
+        .color-button {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 9999px;
+            transition: all 0.2s;
+
+            &.selected {
+                border: 2px solid black;
+                box-shadow: 0 0 0 2px white, 0 0 0 4px black;
+            }
+
+            &:not(.selected) {
+                border: 2px solid #e5e7eb;
+            }
+        }
+    }
+
+    .tasks-section {
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            .task-item {
+                background-color: #f9fafb;
+                border-radius: 0.5rem;
+                padding: 0.75rem;
+
+                .task-header {
+                    font-weight: 500;
+                    margin-bottom: 0.25rem;
+                }
+
+                .task-meta {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 0.875rem;
+                    color: #666;
+                }
+
+                .priority-badge {
+                    padding: 0.25rem 0.5rem;
+                    border-radius: 0.25rem;
+                    font-size: 0.75rem;
+                    font-weight: 500;
+
+                    &.high {
+                        background-color: #fee2e2;
+                        color: #991b1b;
+                    }
+
+                    &.medium {
+                        background-color: #fef3c7;
+                        color: #92400e;
+                    }
+
+                    &.low {
+                        background-color: #dbeafe;
+                        color: #1e40af;
+                    }
+                }
+            }
+        }
+    }
+
+    .submit-button {
+        position: fixed;
+        bottom: calc(env(safe-area-inset-bottom) + 1rem);
+        left: 1rem;
+        right: 1rem;
+    }
+}

@@ -1,0 +1,75 @@
+/* Calendar page styles */
+.calendar-page {
+    .calendar-container {
+        padding-bottom: 5rem;
+    }
+
+    .calendar-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+
+        .nav-button {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            transition: background-color 0.2s;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.05);
+            }
+        }
+    }
+
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0.25rem;
+
+        .weekday-header {
+            text-align: center;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #666;
+            padding: 0.5rem 0;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            position: relative;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+
+            &.today {
+                border: 2px solid var(--primary-color);
+            }
+
+            &.has-tasks {
+                .task-indicators {
+                    position: absolute;
+                    bottom: 0.25rem;
+                    left: 0.25rem;
+                    right: 0.25rem;
+                    display: flex;
+                    gap: 0.25rem;
+
+                    .indicator {
+                        flex: 1;
+                        height: 0.25rem;
+                        border-radius: 9999px;
+                    }
+                }
+            }
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.05);
+            }
+        }
+    }
+
+    .task-sheet {
+        .sheet-content {
+            padding: 1.5rem 1rem;
+        }
+    }
+}

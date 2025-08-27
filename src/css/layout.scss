@@ -1,0 +1,138 @@
+/* Z-index layout system */
+:root {
+    /* Level 1: Main Content */
+    --z-content: 1;
+
+    /* Level 2: UI Components */
+    --z-header: 10;
+    --z-navigation: 10;
+
+    /* Level 3: Overlays */
+    --z-overlay: 20;
+    --z-modal: 21;
+    --z-popover: 22;
+
+    /* Level 4: Action Sheet and Critical UI */
+    --z-action-sheet: 30;
+    --z-toast: 31;
+}
+
+/* Level 1: Main Content Layer */
+.level-content {
+    z-index: var(--z-content);
+    position: relative;
+}
+
+/* Level 2: Header & Navigation Layer */
+.level-header {
+    z-index: var(--z-header);
+    position: relative;
+}
+
+/* Header spacing for content */
+.page-with-header {
+    padding-top: calc(72px + env(safe-area-inset-top));
+}
+
+.level-navigation {
+    z-index: var(--z-navigation);
+    position: relative;
+}
+
+/* Level 3: Overlay Layer */
+.level-overlay {
+    z-index: var(--z-overlay);
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+
+    &.active {
+        pointer-events: auto;
+    }
+}
+
+.level-modal {
+    z-index: var(--z-modal);
+    position: fixed;
+}
+
+.level-popover {
+    z-index: var(--z-popover);
+    position: fixed;
+}
+
+/* Level 4: Action Sheet Layer */
+.level-action-sheet {
+    z-index: var(--z-action-sheet);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.level-toast {
+    z-index: var(--z-toast);
+    position: fixed;
+}
+
+/* Layout Container */
+.layout-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: var(--background-color, #fff);
+}
+
+/* Fixed Navigation */
+.fixed-navigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-navigation);
+    background-color: var(--background-color, #fff);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Safe Area Utilities */
+.safe-area-top {
+    padding-top: env(safe-area-inset-top);
+}
+
+.safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Scrollable Content Area */
+.content-area {
+    flex: 1;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scrolling on iOS */
+    margin-top: calc(24px + env(safe-area-inset-top));
+    /* Adjust based on your header height */
+    margin-bottom: calc(24px + env(safe-area-inset-bottom));
+    /* Adjust based on your navigation height */
+
+    /* Hide scrollbar but keep functionality */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Page Container within Content Area */
+.page-container {
+    height: fit-content;
+    padding: 25px 5px 0 5px;
+    box-sizing: border-box;
+}

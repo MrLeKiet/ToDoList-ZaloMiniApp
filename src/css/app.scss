@@ -1,0 +1,39 @@
+/* Import page-specific styles */
+@import './pages/home.scss';
+@import './pages/calendar.scss';
+@import './pages/create-todo.scss';
+@import './pages/check-todo.scss';
+
+/* Common styles */
+.page {
+  padding: 16px 5px 5px 5px;
+}
+
+.section-container {
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.zaui-list-item {
+  cursor: pointer;
+}
+
+/* Hide scrollbar utility */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+  
+  /* Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* For horizontal scroll containers */
+.scroll-x {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}

@@ -1,0 +1,65 @@
+/* Check Todo page styles */
+.check-todo-page {
+    .filters-section {
+        margin-bottom: 2rem;
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+
+            .filter-button {
+                padding: 0.5rem 1rem;
+                border-radius: 9999px;
+                font-size: 0.875rem;
+                transition: all 0.2s;
+
+                &.active {
+                    background-color: var(--primary-color);
+                    color: white;
+                }
+
+                &:not(.active) {
+                    background-color: #f3f4f6;
+                    color: #4b5563;
+                }
+            }
+        }
+    }
+
+    .task-groups {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        .task-group {
+            .group-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 0.75rem;
+
+                .group-title {
+                    font-weight: 600;
+                }
+
+                .task-count {
+                    font-size: 0.875rem;
+                    color: #6b7280;
+                }
+            }
+
+            .tasks-list {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 2rem 0;
+        color: #6b7280;
+    }
+}
