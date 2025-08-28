@@ -1,15 +1,16 @@
 import CreateTaskForm from "@/components/create-task-form";
 import Header from "@/components/header";
 import "@/css/layout.scss";
-import "@/css/pages/create-todo.scss";
+import "@/css/pages/create-todo-new.scss";
 import useTodoStore from "@/data/store";
 import React from "react";
-import { Button, Input, Page, useNavigate } from "zmp-ui";
+import { Button, Input, Page, Text, useNavigate } from "zmp-ui";
+
 const CreateTodoPage = () => {
     const navigate = useNavigate();
     const [title, setTitle] = React.useState('');
     const [description, setDescription] = React.useState('');
-    const [color, setColor] = React.useState('#161616ff');
+    const [color, setColor] = React.useState('#667eea');
     const [tasks, setTasks] = React.useState<Array<{
         title: string;
         dueDate: string;
@@ -21,6 +22,10 @@ const CreateTodoPage = () => {
 
     const handleAddTask = (task: { title: string; dueDate: string; priority: 'low' | 'medium' | 'high' }) => {
         setTasks([...tasks, { ...task, completed: false }]);
+    };
+
+    const handleRemoveTask = (index: number) => {
+        setTasks(tasks.filter((_, i) => i !== index));
     };
 
     const handleCreateTodo = () => {
@@ -40,115 +45,144 @@ const CreateTodoPage = () => {
     };
 
     const colors = [
-        '#ff0000ff', '#007bffff', '#00ff00ff', '#ff00ffff',
-        '#ffee00ff', '#00ffccff', '#ff6f00ff', '#004cffff'
+        { color: '#667eea', name: 'Purple' },
+        { color: '#764ba2', name: 'Violet' },
+        { color: '#f093fb', name: 'Pink' },
+        { color: '#4facfe', name: 'Blue' },
+        { color: '#43e97b', name: 'Green' },
+        { color: '#fa709a', name: 'Rose' },
+        { color: '#ffecd2', name: 'Peach' },
+        { color: '#a8edea', name: 'Mint' }
     ];
 
     return (
         <Page className="create-todo-page">
-            <Header title="Create Todo" showBack />
+            <Header title="Create Project" showBack />
             
             <div className="page-container">
+                {/* Form Section */}
                 <div className="form-section">
-                    <div>
-                        <label htmlFor="card-title-input" className="block text-sm font-medium text-gray-700 mb-1">
-                            Card Title
+                    <div className="form-group">
+                        <label htmlFor="card-title-input" className="form-label">
+                            <span className="label-text">Project Title</span>
+                            <span className="label-required">*</span>
                         </label>
                         <Input
                             id="card-title-input"
                             type="text"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            placeholder="Enter card title"
+                            placeholder="e.g., Work Projects, Shopping List"
+                            className="form-input"
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor="card-description-input" className="block text-sm font-medium text-gray-700 mb-1">
-                            Description (Optional)
+                    <div className="form-group">
+                        <label htmlFor="card-description-input" className="form-label">
+                            <span className="label-text">Description</span>
+                            <span className="label-optional">(Optional)</span>
                         </label>
                         <Input
                             id="card-description-input"
                             type="text"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            placeholder="Enter description"
+                            placeholder="Brief description of this project"
+                            className="form-input"
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor="card-color-group" className="block text-sm font-medium text-gray-700 mb-1">
-                            Card Color
+                    <div className="form-group">
+                        <label className="form-label">
+                            <span className="label-text">Project Color</span>
                         </label>
-                        <fieldset id="card-color-group" className="flex flex-wrap gap-2" aria-label="Card Color">
-                            <legend className="sr-only">Card Color</legend>
-                            {colors.map((c) => (
+                        <div className="color-grid">
+                            {colors.map((colorOption) => (
                                 <button
-                                    key={c}
-                                    className={`w-8 h-8 rounded-full ${
-                                        color === c 
-                                            ? 'ring-2 ring-black ring-offset-2' 
-                                            : 'border-2 border-gray-300'
+                                    key={colorOption.color}
+                                    className={`color-option ${
+                                        color === colorOption.color ? 'selected' : ''
                                     }`}
-                                    style={{ backgroundColor: c }}
-                                    onClick={() => setColor(c)}
+                                    style={{ backgroundColor: colorOption.color }}
+                                    onClick={() => setColor(colorOption.color)}
                                     type="button"
-                                    aria-label={`Select color ${c}`}
-                                />
+                                    aria-label={`Select ${colorOption.name} color`}
+                                    title={colorOption.name}
+                                >
+                                    {color === colorOption.color && (
+                                        <span className="color-check">✓</span>
+                                    )}
+                                </button>
                             ))}
-                        </fieldset>
+                        </div>
                     </div>
                 </div>
 
-                <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-lg font-semibold">Tasks</h2>
-                        <span className="text-sm text-gray-500">
-                            {tasks.length} tasks added
-                        </span>
+                {/* Tasks Section */}
+                <div className="tasks-section">
+                    <div className="section-header">
+                        <Text size="large" className="section-title">Tasks</Text>
+                        <div className="task-counter">
+                            <span className="counter-number">{tasks.length}</span>
+                            <span className="counter-label">added</span>
+                        </div>
                     </div>
 
                     {tasks.length > 0 && (
-                        <div className="space-y-2">
-                            {tasks.map((task, index) => (
-                                <div 
-                                    key={`${task.title}-${task.dueDate}-${task.priority}`}
-                                    className="p-3 bg-gray-50 rounded-lg flex justify-between items-center"
-                                >
-                                    <div>
-                                        <p className="font-medium">{task.title}</p>
-                                        <p className="text-sm text-gray-500">
-                                            Due: {new Date(task.dueDate).toLocaleDateString()}
-                                        </p>
+                        <div className="tasks-list">
+                            {tasks.map((task, index) => {
+                                let priorityIcon = '🟢';
+                                if (task.priority === 'high') {
+                                    priorityIcon = '🔴';
+                                } else if (task.priority === 'medium') {
+                                    priorityIcon = '🟡';
+                                }
+                                return (
+                                    <div key={`${task.title}-${index}`} className="task-preview-item">
+                                        <div className="task-content">
+                                            <div className="task-header">
+                                                <Text className="task-title">{task.title}</Text>
+                                                <button
+                                                    onClick={() => handleRemoveTask(index)}
+                                                    className="remove-task-btn"
+                                                    aria-label="Remove task"
+                                                >
+                                                    ×
+                                                </button>
+                                            </div>
+                                            <div className="task-meta">
+                                                <span className="task-date">
+                                                    📅 {new Date(task.dueDate).toLocaleDateString()}
+                                                </span>
+                                                <span className={`task-priority priority-${task.priority}`}>
+                                                    {priorityIcon}
+                                                    {task.priority}
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    {(() => {
-                                        const priorityStyles = {
-                                            high: 'bg-red-100 text-red-800',
-                                            medium: 'bg-yellow-100 text-yellow-800',
-                                            low: 'bg-blue-100 text-blue-800'
-                                        };
-                                        return (
-                                            <span className={`px-2 py-1 rounded text-xs font-medium ${priorityStyles[task.priority]}`}>
-                                                {task.priority}
-                                            </span>
-                                        );
-                                    })()}
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     )}
 
-                    <CreateTaskForm onAddTask={handleAddTask} />
+                    <div className="add-task-section">
+                        <CreateTaskForm onAddTask={handleAddTask} />
+                    </div>
                 </div>
 
-                <Button 
-                    className="mt-6"
-                    fullWidth
-                    disabled={!title.trim() || tasks.length === 0}
-                    onClick={handleCreateTodo}
-                >
-                    Create Todo Card
-                </Button>
+                {/* Create Button */}
+                <div className="create-button-section">
+                    <Button 
+                        className={`create-btn ${(!title.trim() || tasks.length === 0) ? 'disabled' : 'enabled'}`}
+                        fullWidth
+                        disabled={!title.trim() || tasks.length === 0}
+                        onClick={handleCreateTodo}
+                    >
+                        <span className="btn-icon">🚀</span>
+                        Create Project ({tasks.length} task{tasks.length !== 1 ? 's' : ''})
+                    </Button>
+                </div>
             </div>
         </Page>
     );
