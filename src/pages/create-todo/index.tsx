@@ -58,7 +58,7 @@ const CreateTodoPage = () => {
     return (
         <Page className="create-todo-page">
             <Header title="Create Project" showBack />
-            
+
             <div className="page-container">
                 {/* Form Section */}
                 <div className="form-section">
@@ -100,9 +100,8 @@ const CreateTodoPage = () => {
                             {colors.map((colorOption) => (
                                 <button
                                     key={colorOption.color}
-                                    className={`color-option ${
-                                        color === colorOption.color ? 'selected' : ''
-                                    }`}
+                                    className={`color-option ${color === colorOption.color ? 'selected' : ''
+                                        }`}
                                     style={{ backgroundColor: colorOption.color }}
                                     onClick={() => setColor(colorOption.color)}
                                     type="button"
@@ -173,7 +172,7 @@ const CreateTodoPage = () => {
 
                 {/* Create Button */}
                 <div className="create-button-section">
-                    <Button 
+                    <Button
                         className={`create-btn ${(!title.trim() || tasks.length === 0) ? 'disabled' : 'enabled'}`}
                         fullWidth
                         disabled={!title.trim() || tasks.length === 0}

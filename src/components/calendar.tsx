@@ -44,7 +44,7 @@ const Calendar: React.FC<CalendarProps> = ({ onSelectDate }) => {
 
     // Get tasks for a specific date
     const getTasksForDate = (day: number) => {
-        const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day).toISOString().split('T')[0];
+        const date = new Date(Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), day)).toISOString().split('T')[0];
         return allTasks.filter(task => task.dueDate === date);
     };
 
@@ -96,9 +96,9 @@ const Calendar: React.FC<CalendarProps> = ({ onSelectDate }) => {
                             key={day}
                             onClick={() => {
                                 const date = new Date(
-                                    currentDate.getFullYear(),
+                                    Date.UTC(currentDate.getFullYear(),
                                     currentDate.getMonth(),
-                                    day
+                                    day)
                                 ).toISOString().split('T')[0];
                                 onSelectDate?.(date);
                             }}
