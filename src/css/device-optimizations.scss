@@ -1,0 +1,191 @@
+/* Device-specific performance optimizations */
+
+/* iOS specific optimizations */
+@supports (-webkit-touch-callout: none) {
+    /* iOS Safari specific styles */
+    .home-page {
+        -webkit-overflow-scrolling: touch;
+        
+        .todo-cards-scroll {
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .welcome-section {
+            /* Prevent iOS zoom on input focus */
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        /* Better tap highlighting */
+        .quick-action-btn,
+        .todo-card-container,
+        .task-item-container {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+    }
+}
+
+/* Android specific optimizations */
+@media screen and (-webkit-min-device-pixel-ratio: 1) and (max-width: 767px) {
+    .home-page {
+        /* Android Chrome optimizations */
+        .welcome-section {
+            /* Hardware acceleration for smoother scrolling */
+            transform: translateZ(0);
+            will-change: transform;
+        }
+        
+        .todo-cards-scroll {
+            /* Better scrolling performance on Android */
+            overscroll-behavior-x: contain;
+        }
+        
+        .task-item-container,
+        .todo-card-container {
+            /* Reduce repaints on Android */
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+    }
+}
+
+/* High refresh rate displays (120Hz+) */
+@media (min-resolution: 120dpi) {
+    .home-page {
+        .quick-action-btn,
+        .todo-card-container,
+        .task-item-container {
+            transition-duration: 0.15s; /* Smoother on high refresh rate */
+        }
+        
+        .progress-bar {
+            transition-duration: 0.2s;
+        }
+    }
+}
+
+/* Low-end device optimizations */
+@media (max-width: 480px) and (max-height: 800px) {
+    .home-page {
+        /* Reduce animations for better performance */
+        .shimmer-animation,
+        .pulse-animation {
+            animation: none;
+        }
+        
+        /* Simplify shadows on low-end devices */
+        .todo-card-container,
+        .task-item-container {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Reduce blur effects */
+        .stat-item {
+            backdrop-filter: none;
+            background: rgba(255, 255, 255, 0.2);
+        }
+    }
+}
+
+/* Battery saving mode */
+@media (prefers-reduced-motion: reduce) {
+    .home-page {
+        * {
+            animation-duration: 0s !important;
+            animation-delay: 0s !important;
+            transition-duration: 0s !important;
+            transition-delay: 0s !important;
+        }
+        
+        .progress-bar::after {
+            display: none; /* Remove shimmer effect */
+        }
+    }
+}
+
+/* Dark mode device optimizations */
+@media (prefers-color-scheme: dark) {
+    .home-page {
+        background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+        
+        .welcome-section {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        }
+        
+        .todo-card-container,
+        .task-item-container {
+            background: #374151;
+            border-color: #4b5563;
+            color: #f9fafb;
+        }
+        
+        .section-title {
+            color: #f9fafb;
+        }
+        
+        .section-subtitle {
+            color: #d1d5db;
+        }
+        
+        .empty-state {
+            background: #374151;
+            
+            .empty-title {
+                color: #f9fafb;
+            }
+            
+            .empty-subtitle {
+                color: #9ca3af;
+            }
+        }
+    }
+}
+
+/* Foldable device support */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .home-page {
+        .page-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: none;
+        }
+        
+        .welcome-section {
+            grid-column: 1 / -1; /* Span full width */
+        }
+        
+        .quick-actions {
+            grid-column: 1 / -1;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+    }
+}
+
+/* Notch and safe area support */
+@supports (padding-top: env(safe-area-inset-top)) {
+    .home-page {
+        padding-top: env(safe-area-inset-top);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* Network-aware optimizations */
+@media (prefers-reduced-data: reduce) {
+    .home-page {
+        /* Reduce visual effects on slow connections */
+        .welcome-section {
+            background: #667eea; /* Solid color instead of gradient */
+        }
+        
+        .progress-bar::after,
+        .shimmer-animation {
+            display: none; /* Remove data-heavy animations */
+        }
+    }
+}

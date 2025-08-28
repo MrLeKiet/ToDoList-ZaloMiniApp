@@ -1,0 +1,302 @@
+/* Responsive utilities and variables */
+
+:root {
+    /* Responsive breakpoints */
+    --bp-xs: 320px;   /* Extra small phones */
+    --bp-sm: 375px;   /* Small phones */
+    --bp-md: 414px;   /* Large phones */
+    --bp-lg: 768px;   /* Small tablets */
+    --bp-xl: 992px;   /* Large tablets */
+    --bp-xxl: 1200px; /* Desktops */
+
+    /* Responsive spacing scales */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-xxl: 3rem;
+
+    /* Responsive font sizes */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
+    --text-4xl: 2.25rem;
+
+    /* Container max widths */
+    --container-sm: 540px;
+    --container-md: 720px;
+    --container-lg: 960px;
+    --container-xl: 1140px;
+    --container-xxl: 1320px;
+}
+
+/* Responsive container */
+.container-responsive {
+    width: 100%;
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (min-width: 576px) {
+    .container-responsive {
+        max-width: var(--container-sm);
+        padding-left: var(--spacing-lg);
+        padding-right: var(--spacing-lg);
+    }
+}
+
+@media (min-width: 768px) {
+    .container-responsive {
+        max-width: var(--container-md);
+        padding-left: var(--spacing-xl);
+        padding-right: var(--spacing-xl);
+    }
+}
+
+@media (min-width: 992px) {
+    .container-responsive {
+        max-width: var(--container-lg);
+        padding-left: var(--spacing-xxl);
+        padding-right: var(--spacing-xxl);
+    }
+}
+
+@media (min-width: 1200px) {
+    .container-responsive {
+        max-width: var(--container-xl);
+    }
+}
+
+@media (min-width: 1400px) {
+    .container-responsive {
+        max-width: var(--container-xxl);
+    }
+}
+
+/* Responsive grid system */
+.grid-responsive {
+    display: grid;
+    gap: var(--spacing-md);
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 576px) {
+    .grid-responsive {
+        gap: var(--spacing-lg);
+    }
+    
+    .grid-responsive.cols-2-sm {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .grid-responsive {
+        gap: var(--spacing-xl);
+    }
+    
+    .grid-responsive.cols-2-md {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .grid-responsive.cols-3-md {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .grid-responsive.cols-3-lg {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .grid-responsive.cols-4-lg {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .grid-responsive.cols-4-xl {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .grid-responsive.cols-5-xl {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+/* Responsive flex utilities */
+.flex-responsive {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+    .flex-responsive.row-md {
+        flex-direction: row;
+        gap: var(--spacing-lg);
+    }
+}
+
+@media (min-width: 992px) {
+    .flex-responsive.row-lg {
+        flex-direction: row;
+        gap: var(--spacing-xl);
+    }
+}
+
+/* Responsive text utilities */
+.text-responsive {
+    font-size: var(--text-sm);
+    line-height: 1.4;
+}
+
+@media (min-width: 576px) {
+    .text-responsive {
+        font-size: var(--text-base);
+    }
+}
+
+@media (min-width: 768px) {
+    .text-responsive {
+        font-size: var(--text-lg);
+        line-height: 1.5;
+    }
+}
+
+@media (min-width: 992px) {
+    .text-responsive {
+        font-size: var(--text-xl);
+        line-height: 1.6;
+    }
+}
+
+/* Responsive heading utilities */
+.heading-responsive {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+@media (min-width: 576px) {
+    .heading-responsive {
+        font-size: var(--text-xl);
+    }
+}
+
+@media (min-width: 768px) {
+    .heading-responsive {
+        font-size: var(--text-2xl);
+        line-height: 1.3;
+    }
+}
+
+@media (min-width: 992px) {
+    .heading-responsive {
+        font-size: var(--text-3xl);
+        line-height: 1.4;
+    }
+}
+
+@media (min-width: 1200px) {
+    .heading-responsive {
+        font-size: var(--text-4xl);
+    }
+}
+
+/* Responsive spacing utilities */
+.spacing-responsive {
+    margin-bottom: var(--spacing-md);
+}
+
+@media (min-width: 576px) {
+    .spacing-responsive {
+        margin-bottom: var(--spacing-lg);
+    }
+}
+
+@media (min-width: 768px) {
+    .spacing-responsive {
+        margin-bottom: var(--spacing-xl);
+    }
+}
+
+@media (min-width: 992px) {
+    .spacing-responsive {
+        margin-bottom: var(--spacing-xxl);
+    }
+}
+
+/* Touch-friendly utilities */
+.touch-friendly {
+    min-height: 44px; /* iOS recommended minimum */
+    min-width: 44px;
+    padding: var(--spacing-sm);
+}
+
+@media (pointer: coarse) {
+    .touch-friendly {
+        min-height: 48px; /* Android recommended minimum */
+        min-width: 48px;
+        padding: var(--spacing-md);
+    }
+}
+
+/* High DPI optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .high-dpi-border {
+        border-width: 0.5px;
+    }
+    
+    .high-dpi-shadow {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+}
+
+/* Dark mode responsive utilities */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #1f2937;
+        --bg-secondary: #374151;
+        --text-primary: #f9fafb;
+        --text-secondary: #d1d5db;
+        --border-color: #4b5563;
+    }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Print styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    .page-break-before {
+        page-break-before: always;
+    }
+    
+    .page-break-after {
+        page-break-after: always;
+    }
+    
+    .page-break-inside-avoid {
+        page-break-inside: avoid;
+    }
+}
