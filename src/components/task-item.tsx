@@ -1,3 +1,4 @@
+import "@/css/components/task-item.scss";
 import type { Task } from '@/data/dummy-data';
 import React from 'react';
 import { Checkbox, Text } from "zmp-ui";
@@ -8,37 +9,89 @@ interface TaskItemProps {
 }
 
 const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle }) => {
-    const priorityColors = {
-        low: 'bg-blue-100 text-blue-800',
-        medium: 'bg-yellow-100 text-yellow-800',
-        high: 'bg-red-100 text-red-800'
+    const priorityConfig = {
+        high: { 
+            color: '#dc2626', 
+            bg: '#fef2f2', 
+            label: 'High',
+            icon: '🔴'
+        },
+        medium: { 
+            color: '#d97706', 
+            bg: '#fef3c7', 
+            label: 'Medium',
+            icon: '🟡'
+        },
+        low: { 
+            color: '#059669', 
+            bg: '#d1fae5', 
+            label: 'Low',
+            icon: '🟢'
+        }
+    };
+
+    const isOverdue = task.dueDate && new Date(task.dueDate) < new Date() && !task.completed;
+    const isDueToday = task.dueDate === new Date().toISOString().split('T')[0];
+
+    // Helper functions for cleaner JSX
+    const getDueDateIcon = () => {
+        if (isOverdue) return '⚠️';
+        if (isDueToday) return '📅';
+        return '📆';
+    };
+
+    const getDueDateText = () => {
+        if (isOverdue) return 'Overdue';
+        if (isDueToday) return 'Today';
+        return new Date(task.dueDate!).toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: 'numeric' 
+        });
     };
 
     return (
-        <div className="p-4 bg-white rounded-lg shadow-sm flex items-center space-x-3">
-            <Checkbox
-                checked={task.completed}
-                value={task.id}
-                onChange={() => onToggle?.(task.id)}
-            />
-            
-            <div className="flex-1">
-                <Text 
-                    className={`font-medium ${task.completed ? 'line-through text-gray-400' : ''}`}
-                >
-                    {task.title}
-                </Text>
-                
-                {task.dueDate && (
-                    <Text size="xSmall" className="text-gray-500">
-                        Due: {new Date(task.dueDate).toLocaleDateString()}
-                    </Text>
-                )}
+        <div className={`task-item-container ${task.completed ? 'completed' : ''} ${isOverdue ? 'overdue' : ''}`}>
+            <div className="task-checkbox">
+                <Checkbox
+                    checked={task.completed}
+                    value={task.id}
+                    onChange={() => onToggle?.(task.id)}
+                />
             </div>
-
-            <span className={`px-2 py-1 rounded text-xs font-medium ${priorityColors[task.priority]}`}>
-                {task.priority}
-            </span>
+            
+            <div className="task-content">
+                <div className="task-header">
+                    <Text 
+                        className={`task-title ${task.completed ? 'completed-text' : ''}`}
+                    >
+                        {task.title}
+                    </Text>
+                    
+                    <div className="task-badges">
+                        {/* Priority badge */}
+                        <span 
+                            className="priority-badge"
+                            style={{ 
+                                color: priorityConfig[task.priority].color,
+                                backgroundColor: priorityConfig[task.priority].bg
+                            }}
+                        >
+                            <span className="priority-icon">
+                                {priorityConfig[task.priority].icon}
+                            </span>
+                            {priorityConfig[task.priority].label}
+                        </span>
+                        
+                        {/* Due date badge */}
+                        {task.dueDate && (
+                            <span className={`due-badge ${isDueToday ? 'due-today' : ''} ${isOverdue ? 'overdue' : ''}`}>
+                                {getDueDateIcon()}
+                                {getDueDateText()}
+                            </span>
+                        )}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

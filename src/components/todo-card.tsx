@@ -1,3 +1,4 @@
+import "@/css/components/todo-card.scss";
 import type { TodoCard as TodoCardType } from '@/data/dummy-data';
 import React from 'react';
 import { Text } from "zmp-ui";
@@ -9,38 +10,88 @@ interface TodoCardProps {
 
 const TodoCard: React.FC<TodoCardProps> = ({ card, onClick }) => {
     const progressPercent = (card.completedTasks / card.totalTasks) * 100;
+    const isCompleted = card.completedTasks === card.totalTasks;
+
+    // Get priority indicator color
+    const getPriorityColor = () => {
+        const highPriorityTasks = card.tasks.filter(task => 
+            task.priority === 'high' && !task.completed
+        ).length;
+        
+        if (highPriorityTasks > 0) return '#ef4444';
+        
+        const mediumPriorityTasks = card.tasks.filter(task => 
+            task.priority === 'medium' && !task.completed
+        ).length;
+        
+        if (mediumPriorityTasks > 0) return '#f59e0b';
+        return '#10b981';
+    };
 
     return (
         <button
-            className="flex-shrink-0 w-64 p-4 rounded-lg cursor-pointer transition-transform hover:scale-105 text-left"
-            style={{ backgroundColor: card.color || '#ffffff' }}
+            className={`todo-card-container ${isCompleted ? 'completed' : ''}`}
             onClick={onClick}
             onKeyDown={(e) => e.key === 'Enter' && onClick?.()}
             tabIndex={0}
         >
-            <div className="space-y-3">
-                <Text size="large" className="font-semibold line-clamp-1">
-                    {card.title}
-                </Text>
+            <div className="card-content">
+                {/* Priority indicator */}
+                <div 
+                    className="priority-indicator"
+                    style={{ backgroundColor: getPriorityColor() }}
+                />
                 
+                {/* Header */}
+                <div className="card-header">
+                    <Text size="large" className="card-title">
+                        {card.title}
+                    </Text>
+                    
+                    {isCompleted && (
+                        <div className="completion-badge">
+                            <span>✓</span>
+                        </div>
+                    )}
+                </div>
+                
+                {/* Description */}
                 {card.description && (
-                    <Text size="small" className="text-gray-600 line-clamp-2">
+                    <Text size="small" className="card-description">
                         {card.description}
                     </Text>
                 )}
 
-                <div className="space-y-1">
-                    <div className="flex justify-between text-sm">
-                        <span>{card.completedTasks}/{card.totalTasks} tasks</span>
-                        <span>{Math.round(progressPercent)}%</span>
+                {/* Progress section */}
+                <div className="progress-section">
+                    <div className="progress-info">
+                        <Text size="small" className="task-count">
+                            {card.completedTasks}/{card.totalTasks} tasks
+                        </Text>
+                        <Text size="small" className="progress-percent">
+                            {Math.round(progressPercent)}%
+                        </Text>
                     </div>
-                    <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                    
+                    <div className="progress-bar-container">
                         <div 
-                            className="h-full bg-primary transition-all duration-300 ease-in-out"
-                            style={{ width: `${progressPercent}%` }}
+                            className="progress-bar"
+                            style={{ 
+                                width: `${progressPercent}%`,
+                                backgroundColor: isCompleted ? '#10b981' : getPriorityColor()
+                            }}
                         />
                     </div>
                 </div>
+
+                {/* Due date if exists */}
+                {card.dueDate && (
+                    <div className="due-date">
+                        <Text size="xSmall" className="due-date-text">
+                            Due: {new Date(card.dueDate).toLocaleDateString()}
+                        </Text>
+                    </div>
+                )}
             </div>
         </button>
     );
