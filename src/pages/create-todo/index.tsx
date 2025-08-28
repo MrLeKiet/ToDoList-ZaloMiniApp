@@ -1,7 +1,7 @@
 import CreateTaskForm from "@/components/create-task-form";
 import Header from "@/components/header";
 import "@/css/layout.scss";
-import "@/css/pages/create-todo-new.scss";
+import "@/css/pages/create-todo.scss";
 import useTodoStore from "@/data/store";
 import React from "react";
 import { Button, Input, Page, Text, useNavigate } from "zmp-ui";
